@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Painel Admin</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/styleAdmin.css">
+  <link rel="icon" href="ferramentas-_1_.ico" sizes="16x16">
+</head>
+<body>
+  <div class="form-container">
+    <div class="top-bar">
+      <h1>Fila de Pretendaentes</h1>
+      <button id="btnExcluirPrimeiro">❌</button>
+    </div>
+    
+    <input type="text" id="busca" placeholder="Buscar por nome..." />
+    <ul id="listaPretendentes"></ul>
+  </div>
+
+  <script>
+    // if (!localStorage.getItem("usuarioLogado")) {
+    //     window.location.replace("index.html");
+    //   }
+    function carregarPretendentes(filtro = '') {
+      const lista = document.getElementById('listaPretendentes');
+      lista.innerHTML = '';
+      const fila = JSON.parse(localStorage.getItem('filaPretendentes')) || [];
+
+      fila.forEach((pretendente) => {
+        if (pretendente.nome.toLowerCase().includes(filtro.toLowerCase())) {
+          const item = document.createElement('li');
+          item.innerHTML = `
+            <strong>Nome:</strong> ${pretendente.nome}<br>
+            <strong>Cidade:</strong> ${pretendente.cidade}<br>
+            <strong>Email:</strong> ${pretendente.email}<br>
+            <strong>Celular:</strong> ${pretendente.celular}<br>
+            <strong>Idade:</strong> ${pretendente.idade}<br>
+            <strong>Grau Escolar:</strong> ${pretendente.grau}<br>
+            <strong>Cargo Desejado:</strong> ${pretendente.cargo}<br>
+            <strong>Salário Pretendido:</strong> R$ ${pretendente.salario}<br>
+            <strong>Habilidades:</strong> ${pretendente.habilidades.join(', ')}<br>
+            <strong>Outra habilidade:</strong> ${pretendente.outrohabil || 'Não informado'}<br>
+            <strong>Já Trabalhou na Área:</strong> ${pretendente.jaTrabalhou}<br>
+            <strong>Está Trabalhando:</strong> ${pretendente.trabalha}<br>
+            <strong>Mensagem:</strong> ${pretendente.mensagem}<br>
+            <strong>Data de Cadastro:</strong> ${new Date(pretendente.dataCadastro).toLocaleString()}
+          `;
+          lista.appendChild(item);
+        }
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      carregarPretendentes();
+
+      document.getElementById('busca').addEventListener('input', (e) => {
+        carregarPretendentes(e.target.value);
+      });
+
+      document.getElementById('btnExcluirPrimeiro').addEventListener('click', () => {
+        let fila = JSON.parse(localStorage.getItem('filaPretendentes')) || [];
+
+        if (fila.length > 0) {
+          fila.shift();
+          localStorage.setItem('filaPretendentes', JSON.stringify(fila));
+          carregarPretendentes();
+        } else {
+          alert('A fila está vazia!');
+        }
+      });
+    });
+  </script>
+</body>
+</html>
