@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="ferramentas-_1_.ico" sizes="16x16">
+  <title>HBK²</title>
+</head>
+<body>
+  
+  <div class="form-container">
+    <h1>Nos conte um pouco sobre você:</h1>
+    <p>Mostre por que você é a pessoa certa!</p>
+
+    <form id="cadastroForm">
+      <div class="input-group">
+        <label for="nome">Seu Nome Completo</label>
+        <input type="text" id="nome" required>
+
+        <label for="cidade">Cidade</label>
+        <input type="text" id="cidade" required>
+
+        <label for="celular">Numero para Contato</label>
+        <input type="text" id="celular" required>
+
+        <label for="email">Seu melhor Email</label>
+        <input type="text" id="email" required>
+
+        <label for="idade">Idade</label>
+        <input type="number" id="idade" required min="0">
+
+        <label>Grau Escolar:</label>
+        <select id="grau" required>
+          <option value="">Selecione</option>
+          <option value="Ensino Médio Completo">Ensino Médio Completo</option>
+          <option value="Graduação Em Andamento">Graduação Em Andamento</option>
+          <option value="Graduação Completa">Graduação Completa</option>
+          <option value="Pós Graduação">Pós Graduação</option>
+        </select>
+
+        <label>Cargo que deseja se aplicar:</label>
+        <select id="cargo" required>
+          <option value="">Selecione</option>
+          <option value="Coordenador de Loja">Coordenador de Loja</option>
+          <option value="Vendedor">Vendedor</option>
+          <option value="Caixa">Caixa</option>
+          <option value="Atendente pós-compra">Atendente pós-compra</option>
+          <option value="Repositor">Repositor</option>
+          <option value="Analista Marketing">Analista Marketing</option>
+          <option value="Entregador">Entregador</option>
+          <option value="Monitor de Câmeras">Monitor de Câmeras</option>
+        </select>
+        
+        <label for="salario">Pretenção Salarial</label>
+        <input type="number" id="salario" required min="0" max="10000" placeholder="R$ 0,00">
+
+        <label>Quais são seus pontos fortes?</label>
+        <div class="checkbox-group">
+          <label><input type="checkbox" name="habilidades" value="Comunicação"> Comunicação </label>
+          <label><input type="checkbox" name="habilidades" value="Agilidade"> Agilidade </label>
+          <label><input type="checkbox" name="habilidades" value="Autodidatismo"> Autodidatismo </label>
+          <label><input type="checkbox" name="habilidades" value="Persuasão"> Persuasão </label>
+          <label><input type="checkbox" name="habilidades" value="Liderança"> Liderança </label>
+          <label><input type="checkbox" name="habilidades" value="Outros" id="habil-outros"> Outros </label>
+        </div>
+        <input type="text" id="outro-habil" class="other-habil-input" placeholder="Qual outro?">
+
+        <label>Já trabalhou antes na área que deseja atuar?</label>
+        <div class="radio-group">
+          <label><input type="radio" name="jaTrabalhou" value="sim" required> Sim</label>
+          <label><input type="radio" name="jaTrabalhou" value="nao"> Não</label>
+        </div>
+
+        <label>Está trabalhando atuamente?</label>
+        <div class="radio-group">
+          <label><input type="radio" name="trabalha" value="sim" required> Sim</label>
+          <label><input type="radio" name="trabalha" value="nao"> Não</label>
+        </div>
+
+        <label for="mensagem">Nos conte mais sobre você:</label>
+        <textarea id="mensagem" required></textarea>
+      </div>
+      <div class="wrapper">
+        <button type="submit" id="btn">
+        <label>Enviar </label>
+      </button>
+    </div>
+  </form>
+  <div class="footer">Confie no seu potencial</div>
+</div>
+  <script>
+      //   if (!localStorage.getItem("usuarioLogado")) {
+      //   window.location.replace("index.html");
+      // }
+    const checkboxOutros = document.getElementById('habil-outros');
+    const campoOutrohabil = document.getElementById('outro-habil');
+
+    checkboxOutros.addEventListener('change', () => {
+      campoOutrohabil.style.display = checkboxOutros.checked ? 'block' : 'none';
+    });
+  </script>
+  <script>
+    document.getElementById('cadastroForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+  
+      const nome = document.getElementById('nome').value;
+      const cidade = document.getElementById('cidade').value;
+      const celular = document.getElementById('celular').value;
+      const email = document.getElementById('email').value;
+      const idade = document.getElementById('idade').value;
+      const grau = document.getElementById('grau').value;
+      const cargo = document.getElementById('cargo').value;
+      const salario = document.getElementById('salario').value;
+      const habilidades = Array.from(document.querySelectorAll('input[name="habilidades"]:checked')).map(el => el.value);
+      const outrohabil = document.getElementById('outro-habil').value;
+      const jaTrabalhou = document.querySelector('input[name="jaTrabalhou"]:checked').value;
+      const trabalha = document.querySelector('input[name="trabalha"]:checked').value;
+      const mensagem = document.getElementById('mensagem').value;
+  
+      const pretendente = {
+        nome,
+        cidade,
+        celular,
+        email,
+        idade,
+        grau,
+        cargo,
+        salario,
+        habilidades,
+        outrohabil,
+        jaTrabalhou,
+        trabalha,
+        mensagem,
+        dataCadastro: new Date().toISOString()
+      };
+  
+      const fila = JSON.parse(localStorage.getItem('filaPretendentes')) || [];
+      fila.push(pretendente);
+      localStorage.setItem('filaPretendentes', JSON.stringify(fila));
+  
+      alert('Cadastro realizado com sucesso!');
+      document.getElementById('cadastroForm').reset();
+    });
+  </script>
+  
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login - Candidato à HBK²</title>
+  <link rel="stylesheet" href="css/styleLogin.css" />
+  <link rel="icon" href="ferramentas-_1_.ico" sizes="16x16">
+</head>
+<body>
+  <form id="loginForm" class="login-box">
+    <h1>Deseja se aplicar a  
+      <br>uma vaga para
+      <br><strong><i>HBK²</i></strong> ?</h1>
+    <input type="text" id="email" name="username" placeholder="Enter Email..." required>
+    <input type="password" id="senha" name="password" placeholder="Enter Password..." required>
+    <button type="submit">Login</button>
+  </form>
+  
+  <script>
+    window.history.pushState(null, null, window.location.href);
+    window.onpopstate = function () {
+      window.history.go(1); // impede voltar para painel
+    };
+    document.addEventListener('DOMContentLoaded', function () {
+      document.getElementById('loginForm').addEventListener('submit', function (e) {
+        e.preventDefault();
+        const email = document.getElementById('email').value;
+        const senha = document.getElementById('senha').value;
+  
+        // Simulação de autenticação
+        if (email === 'admin' && senha === '123') {
+          window.location.href = 'admin.html';
+        } else {
+          window.location.href = 'cadastro.html';
+        }
+      });
+    });
+  </script>
+</body>
+</html>
