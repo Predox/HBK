@@ -5,6 +5,9 @@
 }
 body {
   background-image: url('fundo.png');
+  background-attachment: fixed;         /* Deixa o fundo fixo */
+  background-size: cover;               /* Faz a imagem cobrir toda a tela */
+  height: 100%;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   min-height: 100vh;
   display: flex;
@@ -12,6 +15,37 @@ body {
   align-items: center;
   padding: 20px;
 }
+
+#controls{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  position: fixed;
+  width: 110px;
+  height: 60px;
+  right: 20px;
+  top: 20px;
+  z-index: 1000;
+}
+
+#controls>button{
+  width: 50px;
+  height: 50px;
+  background-color: #3840de;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0,0,0,0.2);
+  cursor: pointer;
+  font-size: 14px;
+  transition: .3s;
+}
+
+#controls>button:hover{
+  transform: scale(1.1);
+  transition: .3s;
+}
+
 .form-container {
   background-color: #fff;
   padding: 40px;
@@ -99,7 +133,7 @@ button {
   transition: 0.3s ease;
   position: relative;
 }
-button > label {
+.form-container button > label {
   color: #fff;
   top: 35%;
   left: 45%;
@@ -110,26 +144,23 @@ button > label {
 button:hover {
   background-color: #2a30a1;
 }
-button:hover > label {
+.form-container button:hover > label {
   transform: scale(1.1);
   transition: 0.5s;
 }
-button:after {
-  position: absolute;
-  content: "";
-  top: 0;
-  left: 0;
-  width: 0;
-  height: 100%;
-  background: #2a30a1;
-  transition: all 0.85s;
-  border-radius: 10px;
-  opacity: 0%;
+
+.success {
+  background-color: #28a745 !important;
+  color: white !important;
+  transition: background-color 1.7s ease;
 }
-button:hover:after {
-  width: 100%;
-  opacity: 100%;
+
+.error {
+  background-color: #dc3545 !important;
+  color: white !important;
+  transition: background-color 1.7s ease;
 }
+
 .footer {
   text-align: center;
   font-size: 0.9rem;
